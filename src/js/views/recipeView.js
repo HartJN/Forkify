@@ -32,15 +32,6 @@ class RecipeView extends View {
     });
   }
 
-  addHandlerIngredients(handler) {
-    this._parentElement.addEventListener('click', function (event) {
-      const button = event.target.closest('.recipe__ingredient-btn');
-      if (!button) return;
-      handler();
-      // console.log('hi');
-    });
-  }
-
   _generateMarkup() {
     return `    
      <figure class="recipe__fig">
@@ -111,15 +102,7 @@ class RecipeView extends View {
 
          </ul>
        
-         <button
-           class="btn--small recipe__ingredient-btn"
-           target="_blank"
-         >
-           <span>Add Ingredients to list</span>
-           <svg class="search__icon">
-             <use href="${icons}#icon-arrow-right"></use>
-           </svg>
-         </button>
+         
        </div>
 
        <div class="recipe__directions">

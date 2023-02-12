@@ -5,7 +5,6 @@ import resultsView from './views/resultsView';
 import paginationView from './views/paginationView';
 import bookmarksView from './views/bookmarksView';
 import addRecipeView from './views/addRecipeView';
-import shoppingListView from './views/shoppingListView';
 
 import { MODAL_CLOSE_SEC } from './config';
 
@@ -96,13 +95,6 @@ const controlAddRecipe = async function (newRecipeData) {
   }
 };
 
-const controlAddShoppingList = function () {
-  model.addShoppingList();
-  console.log(model.state.shoppingList);
-  console.log('hi');
-  shoppingListView.render(model.state.shoppingList);
-};
-
 const init = function () {
   bookmarksView.addHandlerRender(controlBookmarks);
   recipeView.addHandlerRender(controlRecipes);
@@ -111,7 +103,6 @@ const init = function () {
   paginationView.addHandlerButtonClick(controlPagination);
   recipeView.addHandlerAddBookmark(controlAddBookmark);
   addRecipeView.addHandlerUpload(controlAddRecipe);
-  recipeView.addHandlerIngredients(controlAddShoppingList);
 };
 
 init();

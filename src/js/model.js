@@ -12,7 +12,6 @@ export const state = {
     page: 1,
   },
   bookmarks: [],
-  shoppingList: [],
 };
 
 const createRecipeObject = function (data) {
@@ -35,8 +34,6 @@ export const loadRecipe = async function (id) {
   try {
     const data = await AJAX(`${API_URL}${id}?key=${API_KEY}`);
     state.recipe = createRecipeObject(data);
-
-    await addShoppingList();
 
     if (state.bookmarks.some(bookmark => bookmark.id === id))
       state.recipe.bookmarked = true;
@@ -148,30 +145,4 @@ export const uploadRecipe = async function (newRecipeData) {
   } catch (err) {
     throw err;
   }
-};
-
-export const addShoppingList = function () {
-  if (!state.recipe.ingredients) {
-    console.error('Recipe ingredients are not defined');
-    return;
-  }
-
-  const ingredientsArray = [
-    ...state.shoppingList,
-    ...state.recipe.ingredients.map(ingredient =>
-      ingredient.description
-        .toLowerCase()
-        .replace(
-          /minced|squeezed|needed|need|pieces|warmed|frying|sliced|very|thin|against|the|grain|low|sodium|packed|cnstarch|medium|yellow|to taste| to |1|2|3|4|5|6|7|8|9|0|divided|fresh|quarts|quarter|temperature|room|whole| or |chopped|low-sodium|finely diced|sck|tsp|tsps|tbsp||to |heads| or |dried| cut |cut into| and |fine|finely|tins |tin |yel|tinned|whole|medium|small|low |sodium|as needed|package|packaged|grated|crushed|diced|chopped|to taste|ground|\d+|\b[a-z]\b|[^a-zA-Z0-9\s-]/gi,
-          ''
-        )
-        .trim()
-    ),
-  ];
-
-  state.shoppingList = ingredientsArray.filter(
-    (ingredient, index, array) => array.indexOf(ingredient) === index
-  );
-
-  // console.log(state.shoppingList);
 };
